@@ -10,10 +10,14 @@ Name                  Command            State              Ports
 base              /bin/sh                     Up      8083/tcp, 9092/tcp
 kafka-1           /etc/confluent/docker/run   Up      9092/tcp
 ksql-cli          /bin/sh                     Up
+ksql-datagen      /bin/sh                     Up
 ksql-server       /etc/confluent/docker/run   Up      0.0.0.0:8088->8088/tcp
 schema-registry   /etc/confluent/docker/run   Up      8081/tcp
 zk-1              /etc/confluent/docker/run   Up      2181/tcp, 2888/tcp, 3888/tcp
 ```
+
+Kafka-HQ => http://localhost:8081/
+
 
 # Connection dans le container base pour execution de commande kafka
 
@@ -60,4 +64,31 @@ Relancer la commande suivante si les dashboards ne sont pas présents :
 
 ```
 docker-compose -f docker-compose-monitoring.yml up monitoring
+```
+
+# Ingestion de données générées => HELLO WORLD impressions
+
+```
+docker-compose -f docker-compose.yml exec ksql-datagen bash
+
+ksql-datagen bootstrap-server=kafka-1:9092 schema=/test/datagen/impressions.avro format=json topic=impressions key=impressionid
+```
+
+```
+docker-compose -f docker-compose.yml exec base bash
+
+kafka-console-consumer --bootstrap-server kafka-1:9092 --topic impressions
+```
+
+```
+docker-compose -f docker-compose.yml exec ksql-cli ksql http://ksql-server:8088
+
+CREATE STREAM impressions (viewtime BIGINT, key VARCHAR, userid VARCHAR, adid VARCHAR) WITH (KAFKA_TOPIC='impressions', VALUE_FORMAT='json');
+CREATE STREAM impressions2 WITH (KAFKA_TOPIC='impressions2', PARTITIONS=1) as select * from impressions;
+```
+
+```
+docker-compose -f docker-compose.yml exec base bash
+
+kafka-console-consumer --bootstrap-server kafka-1:9092 --topic IMPRESSIONS2 --property print.key=true --from-beginning
 ```
