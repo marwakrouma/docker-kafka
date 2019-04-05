@@ -101,6 +101,8 @@ services:
       - "8088:8088"
     networks:
       - confluent
+    volumes:
+      - ./mount/test/:/test/
     environment:
       KSQL_CONFIG_DIR: "/etc/ksql"
       KSQL_BOOTSTRAP_SERVERS: kafka-1:9092
@@ -112,6 +114,9 @@ services:
       KSQL_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
       KSQL_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
       KSQL_KSQL_SERVER_UI_ENABLED: "false"
+      KSQL_KSQL_SERVICE_ID: "test-ksql"
+      KSQL_KSQL_EXTENTION_DIR: /test/ksql-server
+      # KSQL_KSQL_QUERIES_FILE: /test/ksql-server/hello-world.sql
 
   ksql-cli:
     image: confluentinc/cp-ksql-cli:${version_confluent}
@@ -165,12 +170,23 @@ services:
             docker-kafka-server:
               properties:
                 bootstrap.servers: "kafka-1:9092"
-                schema-registry: "http://schema-registry:8081"
+              schema-registry: "http://schema-registry:8081"
     ports:
       - 8081:8080
     links:
       - kafka-1
       - schema-registry
+
+  python:
+    build: ./build/python
+    container_name: python
+    hostname: python
+    networks:
+      - confluent
+    command: /bin/sh
+    tty: true
+    volumes:
+      - ./mount/test/:/test/
 
 volumes:
   data-zk-1:

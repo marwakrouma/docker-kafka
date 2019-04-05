@@ -92,3 +92,8 @@ docker-compose -f docker-compose.yml exec base bash
 
 kafka-console-consumer --bootstrap-server kafka-1:9092 --topic IMPRESSIONS2 --property print.key=true --from-beginning
 ```
+
+# KSQL server en mode headless
+
+Le mode headless s'active automatiquement à partir du moment où KSQL_KSQL_QUERIES_FILE est défini dans le fichier docker-compose.yml.
+Le ksql-cli ne peut plus être utilisé.
