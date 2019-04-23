@@ -97,3 +97,7 @@ kafka-console-consumer --bootstrap-server kafka-1:9092 --topic IMPRESSIONS2 --pr
 
 Le mode headless s'active automatiquement à partir du moment où KSQL_KSQL_QUERIES_FILE est défini dans le fichier docker-compose.yml.
 Le ksql-cli ne peut plus être utilisé.
+
+
+kafka-console-producer --broker-list kafka-1:9092 --topic topic_in --property "parse.key=true" --property "key.separator=:"
+kafka-console-consumer --bootstrap-server kafka-1:9092 --topic topic_out --property print.key=true
