@@ -55,7 +55,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>fr.test.Sample</mainClass>
+                    <mainClass>fr.test.Launcher</mainClass>
                 </configuration>
                 <executions>
                     <execution>
