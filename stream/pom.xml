@@ -10,11 +10,13 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <kafka.version>2.2.0</kafka.version>
         <spring-boot-starter.version>2.0.4.RELEASE</spring-boot-starter.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <kafka.version>2.2.0</kafka.version>
+        <confluent.version>5.2.1</confluent.version>
+        <avro.version>1.8.1</avro.version>
     </properties>
 
     <dependencies>
@@ -27,6 +29,11 @@
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-streams</artifactId>
             <version>${kafka.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-streams-avro-serde</artifactId>
+            <version>${confluent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
@@ -51,6 +58,25 @@
     <build>
         <finalName>streams</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>${avro.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceDirectory>src/main/avro</sourceDirectory>
+                    <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>
+                    <stringType>String</stringType>
+                    <fieldVisibility>PRIVATE</fieldVisibility>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

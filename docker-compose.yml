@@ -177,16 +177,16 @@ services:
       - kafka-1
       - schema-registry
 
-  python:
-    build: ./build/python
-    container_name: python
-    hostname: python
-    networks:
-      - confluent
-    command: /bin/sh
-    tty: true
-    volumes:
-      - ./mount/test/:/test/
+  # python:
+    # build: ./build/python
+    # container_name: python
+    # hostname: python
+    # networks:
+      # - confluent
+    # command: /bin/sh
+    # tty: true
+    # volumes:
+      # - ./mount/test/:/test/
 
 volumes:
   data-zk-1:

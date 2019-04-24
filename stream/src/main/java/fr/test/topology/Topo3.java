@@ -7,22 +7,22 @@ import org.apache.kafka.streams.kstream.Produced;
 import org.springframework.stereotype.Component;
 
 import fr.test.Topology;
+import fr.test.model.Message;
 
 /**
- * Topology qui concatene la key et value dans une nouvelle valeur 'key -> value'
+ * Topology qui transforme String en Avro
  */
 @Component
-public class Topo2 extends Topology {
+public class Topo3 extends Topology {
 
-    static final String TOPIC_IN = "topic_out";
-    static final String TOPIC_OUT = "topic_out_1";
+    static final String TOPIC_IN = "topic_out_1";
+    static final String TOPIC_OUT = "topic_out_2";
 
     public StreamsBuilder getTopology() {
         StreamsBuilder builder = new StreamsBuilder();
-
         builder.stream(TOPIC_IN, Consumed.with(Serdes.String(), Serdes.String()))
-                .mapValues((k, v) -> k + " -> " + v)
-                .to(TOPIC_OUT, Produced.with(Serdes.String(), Serdes.String()));
+                .mapValues((k, v) -> Message.newBuilder().setId(k).setCount(v).build())
+                .to(TOPIC_OUT, Produced.with(Serdes.String(), getSpecificAvroSerde()));
         return builder;
     }
 }
