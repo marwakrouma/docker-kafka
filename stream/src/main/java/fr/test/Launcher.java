@@ -1,9 +1,6 @@
 package fr.test;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
+import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 import org.apache.kafka.streams.KafkaStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,7 +8,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class Launcher implements CommandLineRunner {

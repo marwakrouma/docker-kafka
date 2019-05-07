@@ -1,0 +1,16 @@
+
+{
+  "namespace": "fr.test.model",
+  "name": "ClientIptv",
+  "type": "record",
+  "fields": [
+        {"name": "clientMAc",  "type": "string"},
+        {"name": "iptvMac", "type": "string"},
+        {"name": "Name", "type": "string"},
+        {"name": "City", "type": "string"},
+        {"name": "groupid", "type": "string"},
+        {"name": "lkp", "type": "string"},
+        {"name": "lzd", "type": "string"},
+        {"name": "zip", "type": "string"}
+  ]
+}

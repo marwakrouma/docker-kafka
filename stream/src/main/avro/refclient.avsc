@@ -1,0 +1,34 @@
+{
+  "namespace": "fr.test.model",
+  "name": "Client",
+  "type": "record",
+  "fields": [
+    {
+      "name": "mac",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "regex": "[7-9]"
+        }
+      }
+    },
+    {
+      "name": "name",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "regex": "[a-z]{3,4}"
+        }
+      }
+    },
+    {
+      "name": "city",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "regex": "[a-c]"
+        }
+      }
+    }
+  ]
+}

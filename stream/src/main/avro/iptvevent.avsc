@@ -1,0 +1,53 @@
+{
+  "namespace": "fr.test.model",
+  "name": "Iptv",
+  "type": "record",
+  "fields": [
+    {
+      "name": "mac",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "regex": "[7-9]"
+        }
+      }
+    },
+    {
+      "name": "zip",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "regex": "750[0-1][0-9]"
+        }
+      }
+    },
+    {
+      "name": "groupid",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "regex": "ch[1-4]"
+        }
+      }
+    },
+    {
+      "name": "lzd",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "regex": "[1-9][0-9]{2,3}"
+        }
+      }
+    },
+    {
+      "name": "lkp",
+      "type": {
+        "type": "string",
+        "arg.properties": {
+          "regex": "[1-9][0-9]{2,3}"
+        }
+      }
+    }
+  ]
+}
+
